@@ -2,7 +2,7 @@
 
 # Beds, but Endgame
 
-Beds, but Endgame is a Fabric challenge mod for Minecraft Java Edition 26.2. It turns sleeping into a progression mechanic built around a new Bedside Table and an optional Soul Lantern upgrade.
+Beds, but Endgame is a Fabric challenge mod for Minecraft Java Edition 26.2. It turns sleeping into a progression mechanic built around Bedside Tables, nightmares and an optional Soul Lantern upgrade.
 
 ## How it works
 
@@ -10,21 +10,40 @@ Beds, but Endgame is a Fabric challenge mod for Minecraft Java Edition 26.2. It 
   <img src="assets/bedside-table-ingame.png" width="620" alt="Bedside Table beside a bed with a Soul Lantern on top">
 </p>
 
-Place a Bedside Table directly beside either side of the bed's head. A table beside the foot, placed diagonally, above the bed or below it does not count.
+Place any Bedside Table directly beside either side of the bed's head. A table beside the foot, placed diagonally, above the bed or below it does not count.
 
 Without a valid table, the bed still sets the player's respawn point but sleeping is denied.
 
 ## Features
 
-- Custom Bedside Table block
+- Twelve Bedside Table variants matching the standard Minecraft wood families
 - Sleeping requires a table beside the bed's head
 - Respawn points remain available without a table
-- Natural insomnia phantoms can be disabled
-- Nightmares can interrupt sleep and lock the player out for the rest of the night
+- Configurable nightmare chance from 0% to 100%
 - A Soul Lantern on a valid Bedside Table prevents nightmares
+- Natural insomnia phantoms can be disabled
 - Shared configuration through Mod Menu and `/bbe` commands
 
-Phantom suppression and nightmares are enabled by default.
+The default nightmare chance is 35%. Phantom suppression is enabled by default.
+
+## Wood variants
+
+The Bedside Table is available in:
+
+- Oak
+- Spruce
+- Birch
+- Jungle
+- Acacia
+- Dark Oak
+- Mangrove
+- Cherry
+- Pale Oak
+- Bamboo
+- Crimson
+- Warped
+
+Each variant uses the matching vanilla plank texture, so resource packs that change vanilla planks also change the corresponding Bedside Table. The original `bedsbutendgame:bedside_table` block is now the Oak Bedside Table, preserving existing worlds.
 
 ## Bedside Table recipe
 
@@ -38,15 +57,15 @@ PDP
 P P
 ```
 
-`P` is any item in the vanilla planks tag and `D` is a diamond. The recipe unlocks after the player obtains a diamond.
+`P` is the matching plank type and `D` is a diamond. For example, spruce planks craft a Spruce Bedside Table. All Bedside Table recipes unlock after the player obtains a diamond and share one cycling recipe-book slot.
 
 ## Nightmares
 
-Without a Soul Lantern directly on top of either valid Bedside Table, there is a 35% chance of a nightmare.
+Without a Soul Lantern directly on top of either valid Bedside Table, sleeping can trigger a nightmare.
 
 The player falls asleep normally, then wakes during the same night instead of reaching morning. After a nightmare, that player cannot sleep again until daytime. The lockout is handled separately for each player.
 
-A Soul Lantern prevents nightmares completely.
+The chance can be set from 0% to 100%. Setting it to 0% disables nightmares. A Soul Lantern prevents nightmares completely regardless of the configured chance.
 
 ## Phantom suppression
 
@@ -65,21 +84,22 @@ Default values:
 ```json
 {
   "disablePhantoms": true,
-  "nightmares": true
+  "nightmareChance": 35
 }
 ```
 
-With Mod Menu installed, the same settings can be changed from the mod list. On multiplayer servers, changing them requires operator permission.
+With Mod Menu installed, the same settings can be changed from the mod list. The nightmare chance uses a slider in 5% steps. Changes are applied when Done is pressed, and Reset to Defaults restores the default values. On multiplayer servers, changing settings requires operator permission.
 
 Commands:
 
 ```text
 /bbe config
 /bbe config disablePhantoms <on|off>
-/bbe config nightmares <on|off>
+/bbe config nightmareChance <0-100>
+/bbe config reset
 ```
 
-Command changes are saved immediately and synchronized with the Mod Menu screen.
+Command changes are saved immediately and synchronized with the Mod Menu screen. Existing 0.2.0 config files are migrated automatically: an enabled nightmare toggle becomes 35%, while a disabled toggle becomes 0%.
 
 ## Installation
 
@@ -92,13 +112,13 @@ Mod Menu is optional and only required for the graphical config screen.
 
 ## Inspiration
 
-Beds, but Endgame was inspired by [Harder Beds](https://modrinth.com/mod/harder-beds). I liked its approach to making sleep require a properly secured shelter, but wanted the mechanic to function differently and include my own bedside-table progression system, so I created a separate implementation.
+Beds, but Endgame was inspired by [Harder Beds](https://modrinth.com/mod/harder-beds). I liked its approach to making sleep require a properly secured shelter, but wanted the mechanic to function differently and include my own Bedside Table progression system, so I created a separate implementation.
 
 ## Testing status
 
-The Bedside Table, recipe, item rendering, block outline, collision, lighting and basic sleep requirement have been tested in singleplayer.
+Version 0.2.0 was tested in singleplayer, including world joining, sleeping, respawn handling, nightmares, Soul Lantern protection, phantom suppression, Mod Menu configuration and `/bbe` commands.
 
-Version 0.2.0 adds phantom suppression, nightmares, configuration and commands. These systems still need a full singleplayer and multiplayer test pass before a stable release.
+Version 0.3.0 adds the nightmare chance slider, reset controls and all wood variants. These changes still need a complete singleplayer test pass. Multiplayer and dedicated-server behavior have not yet been fully tested.
 
 ## Build from source
 

@@ -1,13 +1,14 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
+  "group": "bedsbutendgame:bedside_tables",
   "pattern": [
     "PPP",
     "PDP",
     "P P"
   ],
   "key": {
-    "P": "#minecraft:planks",
+    "P": "minecraft:oak_planks",
     "D": "minecraft:diamond"
   },
   "result": {

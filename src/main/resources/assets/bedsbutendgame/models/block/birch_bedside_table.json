@@ -1,0 +1,7 @@
+{
+  "parent": "bedsbutendgame:block/bedside_table_base",
+  "textures": {
+    "wood": "minecraft:block/birch_planks",
+    "particle": "minecraft:block/birch_planks"
+  }
+}

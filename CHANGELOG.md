@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.3.0
+
+- Added Oak, Spruce, Birch, Jungle, Acacia, Dark Oak, Mangrove, Cherry, Pale Oak, Bamboo, Crimson and Warped Bedside Tables
+- Kept the original `bedside_table` ID as the Oak variant for world compatibility
+- Switched Bedside Tables to matching vanilla plank textures with shared model geometry
+- Added matching-plank recipes and grouped them into one cycling recipe-book slot
+- Replaced the nightmare toggle with a configurable 0% to 100% chance
+- Added a Mod Menu nightmare chance slider in 5% steps
+- Added Reset to Defaults in Mod Menu and `/bbe config reset`
+- Added `/bbe config nightmareChance <0-100>`
+- Added automatic migration from the 0.2.0 nightmare toggle
+- Removed the redundant “Server settings.” text from Mod Menu
+
 ## 0.2.0
 
 - Added a server-authoritative configuration shared by Mod Menu and commands

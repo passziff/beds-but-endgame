@@ -1,9 +1,11 @@
 package com.bedsbutendgame.command;
 
+import com.bedsbutendgame.config.BbeConfig;
 import com.bedsbutendgame.config.ConfigManager;
 import com.bedsbutendgame.config.ConfigOption;
 import com.bedsbutendgame.network.ConfigNetworking;
 import com.mojang.brigadier.Command;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.commands.CommandSourceStack;
@@ -21,7 +23,13 @@ public final class BbeCommands {
 						.then(Commands.literal("config")
 								.executes(BbeCommands::showConfig)
 								.then(settingNode(ConfigOption.DISABLE_PHANTOMS))
-								.then(settingNode(ConfigOption.NIGHTMARES)))
+								.then(Commands.literal("nightmareChance")
+										.requires(BbeCommands::canChangeConfig)
+										.then(Commands.argument("percent", IntegerArgumentType.integer(0, 100))
+												.executes(BbeCommands::setNightmareChance)))
+								.then(Commands.literal("reset")
+										.requires(BbeCommands::canChangeConfig)
+										.executes(BbeCommands::resetConfig)))
 		));
 	}
 
@@ -45,7 +53,7 @@ public final class BbeCommands {
 		context.getSource().sendSuccess(() -> Component.translatable(
 				"commands.bedsbutendgame.config.status",
 				state(ConfigManager.disablePhantoms()),
-				state(ConfigManager.nightmares())
+				Component.literal(ConfigManager.nightmareChance() + "%")
 		), false);
 		return Command.SINGLE_SUCCESS;
 	}
@@ -61,6 +69,28 @@ public final class BbeCommands {
 				"commands.bedsbutendgame.config.changed",
 				Component.translatable("config.bedsbutendgame." + option.commandName()),
 				state(enabled)
+		), true);
+		return Command.SINGLE_SUCCESS;
+	}
+
+	private static int setNightmareChance(CommandContext<CommandSourceStack> context) {
+		int chance = IntegerArgumentType.getInteger(context, "percent");
+		ConfigManager.setNightmareChance(chance);
+		ConfigNetworking.broadcast(context.getSource().getServer());
+		context.getSource().sendSuccess(() -> Component.translatable(
+				"commands.bedsbutendgame.config.nightmare_chance_changed",
+				Component.literal(chance + "%")
+		), true);
+		return Command.SINGLE_SUCCESS;
+	}
+
+	private static int resetConfig(CommandContext<CommandSourceStack> context) {
+		ConfigManager.reset();
+		ConfigNetworking.broadcast(context.getSource().getServer());
+		context.getSource().sendSuccess(() -> Component.translatable(
+				"commands.bedsbutendgame.config.reset",
+				state(BbeConfig.DEFAULT_DISABLE_PHANTOMS),
+				Component.literal(BbeConfig.DEFAULT_NIGHTMARE_CHANCE + "%")
 		), true);
 		return Command.SINGLE_SUCCESS;
 	}

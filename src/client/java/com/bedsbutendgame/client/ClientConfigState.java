@@ -1,22 +1,24 @@
 package com.bedsbutendgame.client;
 
+import com.bedsbutendgame.config.BbeConfig;
+
 public final class ClientConfigState {
-	private static boolean disablePhantoms = true;
-	private static boolean nightmares = true;
+	private static boolean disablePhantoms = BbeConfig.DEFAULT_DISABLE_PHANTOMS;
+	private static int nightmareChance = BbeConfig.DEFAULT_NIGHTMARE_CHANCE;
 
 	private ClientConfigState() {
 	}
 
-	public static void update(boolean phantomsDisabled, boolean nightmaresEnabled) {
+	public static void update(boolean phantomsDisabled, int chance) {
 		disablePhantoms = phantomsDisabled;
-		nightmares = nightmaresEnabled;
+		nightmareChance = chance;
 	}
 
 	public static boolean disablePhantoms() {
 		return disablePhantoms;
 	}
 
-	public static boolean nightmares() {
-		return nightmares;
+	public static int nightmareChance() {
+		return nightmareChance;
 	}
 }

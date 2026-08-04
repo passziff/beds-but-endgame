@@ -3,6 +3,8 @@ package com.bedsbutendgame.config;
 import com.bedsbutendgame.BedsButEndgame;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import net.fabricmc.loader.api.FabricLoader;
 
 import java.io.IOException;
@@ -29,8 +31,27 @@ public final class ConfigManager {
 		}
 
 		try (Reader reader = Files.newBufferedReader(CONFIG_PATH)) {
-			BbeConfig loaded = GSON.fromJson(reader, BbeConfig.class);
-			config = loaded == null ? new BbeConfig() : loaded;
+			JsonObject json = JsonParser.parseReader(reader).getAsJsonObject();
+			BbeConfig loaded = new BbeConfig();
+			boolean migrated = false;
+
+			if (json.has("disablePhantoms")) {
+				loaded.disablePhantoms = json.get("disablePhantoms").getAsBoolean();
+			}
+
+			if (json.has("nightmareChance")) {
+				loaded.nightmareChance = clampChance(json.get("nightmareChance").getAsInt());
+			} else if (json.has("nightmares")) {
+				loaded.nightmareChance = json.get("nightmares").getAsBoolean()
+						? BbeConfig.DEFAULT_NIGHTMARE_CHANCE
+						: 0;
+				migrated = true;
+			}
+
+			config = loaded;
+			if (migrated || !json.has("nightmareChance")) {
+				save();
+			}
 		} catch (Exception exception) {
 			BedsButEndgame.LOGGER.warn("Could not read the Beds, but Endgame config. Restoring defaults.", exception);
 			config = new BbeConfig();
@@ -53,22 +74,34 @@ public final class ConfigManager {
 		return config.disablePhantoms;
 	}
 
-	public static synchronized boolean nightmares() {
-		return config.nightmares;
+	public static synchronized int nightmareChance() {
+		return config.nightmareChance;
 	}
 
 	public static synchronized boolean get(ConfigOption option) {
 		return switch (option) {
 			case DISABLE_PHANTOMS -> config.disablePhantoms;
-			case NIGHTMARES -> config.nightmares;
 		};
 	}
 
 	public static synchronized void set(ConfigOption option, boolean enabled) {
 		switch (option) {
 			case DISABLE_PHANTOMS -> config.disablePhantoms = enabled;
-			case NIGHTMARES -> config.nightmares = enabled;
 		}
 		save();
+	}
+
+	public static synchronized void setNightmareChance(int chance) {
+		config.nightmareChance = clampChance(chance);
+		save();
+	}
+
+	public static synchronized void reset() {
+		config = new BbeConfig();
+		save();
+	}
+
+	private static int clampChance(int chance) {
+		return Math.max(0, Math.min(100, chance));
 	}
 }

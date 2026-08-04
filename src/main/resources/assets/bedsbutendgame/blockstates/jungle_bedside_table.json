@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=west": {
+      "model": "bedsbutendgame:block/jungle_bedside_table"
+    },
+    "facing=north": {
+      "model": "bedsbutendgame:block/jungle_bedside_table",
+      "y": 90
+    },
+    "facing=east": {
+      "model": "bedsbutendgame:block/jungle_bedside_table",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "bedsbutendgame:block/jungle_bedside_table",
+      "y": 270
+    }
+  }
+}

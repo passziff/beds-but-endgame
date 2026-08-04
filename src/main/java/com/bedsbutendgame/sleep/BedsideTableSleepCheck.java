@@ -44,8 +44,8 @@ public final class BedsideTableSleepCheck {
 				: Direction.EAST;
 		BlockPos firstPos = headPos.relative(firstSide);
 		BlockPos secondPos = headPos.relative(firstSide.getOpposite());
-		boolean firstValid = level.getBlockState(firstPos).is(ModBlocks.BEDSIDE_TABLE);
-		boolean secondValid = level.getBlockState(secondPos).is(ModBlocks.BEDSIDE_TABLE);
+		boolean firstValid = ModBlocks.isBedsideTable(level.getBlockState(firstPos));
+		boolean secondValid = ModBlocks.isBedsideTable(level.getBlockState(secondPos));
 
 		if (firstValid && secondValid) {
 			return List.of(firstPos, secondPos);

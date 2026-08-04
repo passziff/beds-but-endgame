@@ -18,7 +18,6 @@ import java.util.Set;
 import java.util.UUID;
 
 public final class NightmareManager {
-	public static final int NIGHTMARE_CHANCE_PERCENT = 35;
 	private static final int NIGHTMARE_DELAY_TICKS = 60;
 	private static final long MIDNIGHT_TIME = 18000L;
 
@@ -33,7 +32,7 @@ public final class NightmareManager {
 	}
 
 	public static boolean isLockedOut(ServerPlayer player) {
-		if (!ConfigManager.nightmares() || isDay(player.level())) {
+		if (ConfigManager.nightmareChance() <= 0 || isDay(player.level())) {
 			LOCKED_OUT.remove(player.getUUID());
 			return false;
 		}
@@ -41,13 +40,14 @@ public final class NightmareManager {
 	}
 
 	public static void onSleepStarted(ServerPlayer player, BlockPos bedPos) {
-		if (!ConfigManager.nightmares()) {
+		int chance = ConfigManager.nightmareChance();
+		if (chance <= 0) {
 			return;
 		}
 		if (BedsideTableSleepCheck.hasSoulLantern(player.level(), bedPos)) {
 			return;
 		}
-		if (player.getRandom().nextInt(100) >= NIGHTMARE_CHANCE_PERCENT) {
+		if (player.getRandom().nextInt(100) >= chance) {
 			return;
 		}
 
@@ -55,14 +55,15 @@ public final class NightmareManager {
 	}
 
 	private static void tick(MinecraftServer server) {
+		int chance = ConfigManager.nightmareChance();
 		for (ServerPlayer player : server.getPlayerList().getPlayers()) {
-			if (!ConfigManager.nightmares() || isDay(player.level())) {
+			if (chance <= 0 || isDay(player.level())) {
 				LOCKED_OUT.remove(player.getUUID());
 				PENDING.remove(player.getUUID());
 			}
 		}
 
-		if (!ConfigManager.nightmares()) {
+		if (chance <= 0) {
 			PENDING.clear();
 			LOCKED_OUT.clear();
 			return;

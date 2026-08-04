@@ -1,8 +1,7 @@
 package com.bedsbutendgame.config;
 
 public enum ConfigOption {
-	DISABLE_PHANTOMS("disablePhantoms"),
-	NIGHTMARES("nightmares");
+	DISABLE_PHANTOMS("disablePhantoms");
 
 	private final String commandName;
 

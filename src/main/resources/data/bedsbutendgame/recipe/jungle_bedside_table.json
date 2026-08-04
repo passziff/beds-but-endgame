@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "bedsbutendgame:bedside_tables",
+  "pattern": [
+    "PPP",
+    "PDP",
+    "P P"
+  ],
+  "key": {
+    "P": "minecraft:jungle_planks",
+    "D": "minecraft:diamond"
+  },
+  "result": {
+    "id": "bedsbutendgame:jungle_bedside_table",
+    "count": 1
+  }
+}

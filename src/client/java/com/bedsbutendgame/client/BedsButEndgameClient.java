@@ -10,7 +10,7 @@ public final class BedsButEndgameClient implements ClientModInitializer {
 		ClientPlayNetworking.registerGlobalReceiver(ConfigSyncPayload.TYPE, (payload, context) ->
 				ClientConfigState.update(
 						payload.disablePhantoms(),
-						payload.nightmares()
+						payload.nightmareChance()
 				)
 		);
 	}

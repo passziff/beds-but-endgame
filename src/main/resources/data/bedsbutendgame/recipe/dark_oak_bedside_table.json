@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "bedsbutendgame:bedside_tables",
+  "pattern": [
+    "PPP",
+    "PDP",
+    "P P"
+  ],
+  "key": {
+    "P": "minecraft:dark_oak_planks",
+    "D": "minecraft:diamond"
+  },
+  "result": {
+    "id": "bedsbutendgame:dark_oak_bedside_table",
+    "count": 1
+  }
+}

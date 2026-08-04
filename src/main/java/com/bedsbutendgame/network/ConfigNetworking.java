@@ -21,6 +21,10 @@ public final class ConfigNetworking {
 	}
 
 	public static void broadcast(MinecraftServer server) {
+		if (server == null) {
+			return;
+		}
+
 		ConfigSyncPayload payload = currentPayload();
 		for (ServerPlayer player : server.getPlayerList().getPlayers()) {
 			ServerPlayNetworking.send(player, payload);
@@ -30,7 +34,7 @@ public final class ConfigNetworking {
 	private static ConfigSyncPayload currentPayload() {
 		return new ConfigSyncPayload(
 				ConfigManager.disablePhantoms(),
-				ConfigManager.nightmares()
+				ConfigManager.nightmareChance()
 		);
 	}
 }
