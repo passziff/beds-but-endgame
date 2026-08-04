@@ -24,6 +24,12 @@ Bedside Tables are available in Oak, Spruce, Birch, Jungle, Acacia, Dark Oak, Ma
 
 Each variant uses its matching vanilla plank texture, including textures supplied by resource packs.
 
+<p align="center">
+  <img src="assets/bedside-table-splotch.png" width="900" alt="Bedside Table variants using the Splotch resource pack">
+</p>
+
+<p align="center"><sub>Resource-pack compatibility shown with <a href="https://www.curseforge.com/minecraft/texture-packs/splotch">Splotch</a> by cheezlordy.</sub></p>
+
 ## Crafting
 
 <p align="center">

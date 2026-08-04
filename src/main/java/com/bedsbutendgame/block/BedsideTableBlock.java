@@ -35,7 +35,6 @@ public final class BedsideTableBlock extends HorizontalDirectionalBlock {
 
 
 	private static final Map<Direction, VoxelShape> OUTLINE_SHAPES = createShapes();
-	private static final Map<Direction, VoxelShape> OCCLUSION_SHAPES = createShapes();
 
 	public BedsideTableBlock(Properties properties) {
 		super(properties);
@@ -74,12 +73,12 @@ public final class BedsideTableBlock extends HorizontalDirectionalBlock {
 
 	@Override
 	protected VoxelShape getOcclusionShape(BlockState state) {
-		return OCCLUSION_SHAPES.get(state.getValue(FACING));
+		return Shapes.empty();
 	}
 
 	@Override
 	protected boolean useShapeForLightOcclusion(BlockState state) {
-		return true;
+		return false;
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package com.bedsbutendgame.block;
 
 import com.bedsbutendgame.BedsButEndgame;
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
+import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.references.BlockItemId;
@@ -44,6 +45,19 @@ public final class ModBlocks {
 			BAMBOO_BEDSIDE_TABLE,
 			CRIMSON_BEDSIDE_TABLE,
 			WARPED_BEDSIDE_TABLE
+	);
+
+	private static final List<Block> FLAMMABLE_BEDSIDE_TABLES = List.of(
+			BEDSIDE_TABLE,
+			SPRUCE_BEDSIDE_TABLE,
+			BIRCH_BEDSIDE_TABLE,
+			JUNGLE_BEDSIDE_TABLE,
+			ACACIA_BEDSIDE_TABLE,
+			DARK_OAK_BEDSIDE_TABLE,
+			MANGROVE_BEDSIDE_TABLE,
+			CHERRY_BEDSIDE_TABLE,
+			PALE_OAK_BEDSIDE_TABLE,
+			BAMBOO_BEDSIDE_TABLE
 	);
 
 	private static final Set<Block> BEDSIDE_TABLE_SET = Set.copyOf(BEDSIDE_TABLES);
@@ -89,6 +103,9 @@ public final class ModBlocks {
 	}
 
 	public static void initialize() {
+		FlammableBlockRegistry flammableBlocks = FlammableBlockRegistry.getDefaultInstance();
+		FLAMMABLE_BEDSIDE_TABLES.forEach(block -> flammableBlocks.add(block, 5, 20));
+
 		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS)
 				.register(output -> BEDSIDE_TABLES.forEach(block -> output.accept(block.asItem())));
 	}

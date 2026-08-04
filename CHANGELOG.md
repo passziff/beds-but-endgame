@@ -14,8 +14,9 @@
 - Added `/bbe config nightmareChance <0-100>`
 - Added automatic migration from the 0.2.0 nightmare toggle
 - Removed the redundant “Server settings.” text from Mod Menu
-- Fixed overly dark model shading when a Bedside Table touches a full block
-- Updated the README banner and screenshots
+- Removed Bedside Table light occlusion to prevent dark faces beside full blocks
+- Matched fire behavior to the corresponding plank families; Crimson and Warped remain nonflammable
+- Updated the README banner and screenshots, including a credited Splotch resource-pack example
 
 ## 0.2.0
 
