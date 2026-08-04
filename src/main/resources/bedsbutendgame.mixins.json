@@ -3,6 +3,7 @@
   "package": "com.bedsbutendgame.mixin",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
+    "PhantomSpawnerMixin",
     "ServerPlayerMixin"
   ],
   "injectors": {

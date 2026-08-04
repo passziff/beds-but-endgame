@@ -1,6 +1,10 @@
 package com.bedsbutendgame;
 
 import com.bedsbutendgame.block.ModBlocks;
+import com.bedsbutendgame.command.BbeCommands;
+import com.bedsbutendgame.config.ConfigManager;
+import com.bedsbutendgame.network.ConfigNetworking;
+import com.bedsbutendgame.sleep.NightmareManager;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.resources.Identifier;
 import org.slf4j.Logger;
@@ -12,7 +16,11 @@ public final class BedsButEndgame implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		ConfigManager.load();
 		ModBlocks.initialize();
+		ConfigNetworking.initialize();
+		BbeCommands.initialize();
+		NightmareManager.initialize();
 		LOGGER.info("Beds, but Endgame initialized");
 	}
 

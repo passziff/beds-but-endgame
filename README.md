@@ -2,39 +2,32 @@
 
 # Beds, but Endgame
 
-Beds, but Endgame is a Fabric challenge mod for Minecraft Java Edition 26.2.
+Beds, but Endgame is a Fabric challenge mod for Minecraft Java Edition 26.2. It turns sleeping into a progression mechanic built around a new Bedside Table, safer shelters and an optional Soul Lantern upgrade.
 
-Sleeping requires a Bedside Table next to the head of the bed. Beds still set the player's respawn point without one, so the restriction affects skipping the night rather than basic respawning.
+## How it works
 
-## Main features
+<p align="center">
+  <img src="assets/bedside-table-ingame.png" width="620" alt="Bedside Table beside a bed with a Soul Lantern on top">
+</p>
 
-- Bedside Table block with a custom model and texture
-- Sleeping requires a table beside the head of the bed
-- Either side of the bed head works
+Place a Bedside Table directly beside either side of the bed's head. A table beside the foot, placed diagonally, above the bed or below it does not count.
+
+Without a valid table, the bed still sets the player's respawn point but sleeping is denied.
+
+## Features
+
+- Custom Bedside Table block
+- Sleeping requires a table beside the bed's head
 - Respawn points remain available without a table
-- Accurate model-shaped selection outline
-- Full-block collision for consistent movement
-- Wooden sounds and breaking properties
-- Axe as the preferred tool
-- Fixed diamond-and-planks recipe
+- Secured sleep checks in a 40x20x40 area around the bed
+- Natural insomnia phantoms can be disabled
+- Nightmares can interrupt sleep and lock the player out for the rest of the night
+- A Soul Lantern on a valid Bedside Table prevents nightmares
+- Shared configuration through Mod Menu and `/bbe` commands
 
-## How the sleep requirement works
+All three optional mechanics are enabled by default.
 
-<p align="center">
-  <img src="assets/bedside-table-ingame.png" width="620" alt="Bedside Table placed beside the head of a bed">
-</p>
-
-Place a Bedside Table directly to the left or right of the bed's head. A table beside the foot, diagonally placed, above the bed or below it does not count.
-
-When no valid table is present, the bed still sets the player's respawn point but refuses to start sleeping.
-
-## Bedside Table
-
-<p align="center">
-  <img src="assets/bedside-table-dropped.png" width="620" alt="Dropped Bedside Table item">
-</p>
-
-## Recipe
+## Bedside Table recipe
 
 <p align="center">
   <img src="assets/bedside-table-recipe.png" width="480" alt="Bedside Table crafting recipe">
@@ -48,13 +41,54 @@ P P
 
 `P` is any item in the vanilla planks tag and `D` is a diamond. The recipe unlocks after the player obtains a diamond.
 
-## Planned mechanics
+## Secured sleep zone
 
-- Optional secured-sleep check in a 40x20x40 area around the bed
-- Sleep denial when hostile mobs could spawn and pathfind to the player
-- Optional disabling of natural insomnia phantom spawning
-- Optional nightmares unless a Soul Lantern is placed on the Bedside Table
-- Configuration through Mod Menu
+When enabled, the mod checks a 40x20x40 area around the bed when the player tries to sleep. Sleep is denied when hostile mobs are already able to reach the player or when the surrounding area contains a valid hostile spawn position with a path to the bed.
+
+The normal vanilla nearby-monster check still applies.
+
+## Nightmares
+
+Without a Soul Lantern directly on top of either valid Bedside Table, there is a 35% chance of a nightmare.
+
+The player falls asleep normally, then wakes during the same night instead of reaching morning. After a nightmare, that player cannot sleep again until daytime. The lockout is per player and remains active after reconnecting.
+
+A Soul Lantern prevents nightmares completely.
+
+## Phantom suppression
+
+When enabled, the mod prevents natural insomnia-based phantom spawning. Existing phantoms and phantoms created through commands, spawn eggs or other mechanics are unaffected.
+
+## Configuration
+
+The settings are server-authoritative and saved in:
+
+```text
+config/bedsbutendgame.json
+```
+
+Default values:
+
+```json
+{
+  "securedSleepZone": true,
+  "disablePhantoms": true,
+  "nightmares": true
+}
+```
+
+With Mod Menu installed, the same settings can be changed from the mod list. On multiplayer servers, changing them requires operator permission.
+
+Commands:
+
+```text
+/bbe config
+/bbe config securedSleepZone <on|off>
+/bbe config disablePhantoms <on|off>
+/bbe config nightmares <on|off>
+```
+
+Command changes are saved immediately and synchronized with the Mod Menu screen.
 
 ## Installation
 
@@ -63,15 +97,17 @@ P P
 3. Put the installable mod JAR in the `mods` folder.
 4. Start Minecraft with Java 25.
 
+Mod Menu is optional and only required for the graphical config screen.
+
 ## Inspiration
 
 Beds, but Endgame was inspired by [Harder Beds](https://modrinth.com/mod/harder-beds). I liked its approach to requiring a properly secured shelter before sleeping, but wanted the mechanic to work differently and include my own Bedside Table progression, so I made a separate implementation.
 
-## Current testing status
+## Testing status
 
-The Bedside Table, recipe, item rendering, selection outline, lighting and basic sleep requirement have been tested in singleplayer. Version 0.1.4 restores full-block collision and moves the recipe to the Miscellaneous recipe-book category.
+The Bedside Table, recipe, item rendering, block outline, collision, lighting and basic sleep requirement have been tested in singleplayer.
 
-Dedicated multiplayer has not been tested yet.
+Version 0.2.0 adds the secured sleep zone, phantom suppression, nightmares, configuration and commands. These systems still need a full singleplayer and multiplayer test pass before a stable release.
 
 ## Build from source
 

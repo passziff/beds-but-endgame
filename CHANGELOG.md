@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.2.0
+
+- Added a server-authoritative configuration shared by Mod Menu and commands
+- Added `/bbe config` commands using `on` and `off` values
+- Allowed config changes in singleplayer without enabling cheats
+- Added the optional 40x20x40 secured sleep zone, enabled by default
+- Added optional natural insomnia phantom suppression, enabled by default
+- Added nightmares with a 35% chance, enabled by default
+- Added per-player sleep lockout until daytime after a nightmare, including after reconnecting
+- Added Soul Lantern protection against nightmares
+- Synchronized configuration values to connected clients
+- Removed the diamond handles from the Bedside Table selection outline
+- Replaced the first README screenshot with the Soul Lantern image
+- Reworked the README around the completed mechanics and configuration
+
 ## 0.1.4
 
 - Restored a full-block collision box for the Bedside Table

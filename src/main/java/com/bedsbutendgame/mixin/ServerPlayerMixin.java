@@ -1,6 +1,9 @@
 package com.bedsbutendgame.mixin;
 
+import com.bedsbutendgame.config.ConfigManager;
 import com.bedsbutendgame.sleep.BedsideTableSleepCheck;
+import com.bedsbutendgame.sleep.NightmareManager;
+import com.bedsbutendgame.sleep.SecuredSleepZone;
 import com.mojang.datafixers.util.Either;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -23,15 +26,39 @@ public abstract class ServerPlayerMixin {
 			),
 			cancellable = true
 	)
-	private void bedsbutendgame$requireBedsideTable(
+	private void bedsbutendgame$checkSleepRequirements(
 			BlockPos bedPos,
 			CallbackInfoReturnable<Either<Player.BedSleepingProblem, Unit>> cir
 	) {
 		ServerPlayer player = (ServerPlayer) (Object) this;
 		if (!BedsideTableSleepCheck.hasBedsideTable(player.level(), bedPos)) {
-			cir.setReturnValue(Either.left(new Player.BedSleepingProblem(
-					Component.translatable("sleep.bedsbutendgame.missing_bedside_table")
-			)));
+			deny(cir, "sleep.bedsbutendgame.missing_bedside_table");
+			return;
 		}
+		if (NightmareManager.isLockedOut(player)) {
+			deny(cir, "sleep.bedsbutendgame.nightmare_lockout");
+			return;
+		}
+		if (ConfigManager.securedSleepZone() && SecuredSleepZone.isUnsafe(player, bedPos)) {
+			deny(cir, "sleep.bedsbutendgame.unsecured_area");
+		}
+	}
+
+	@Inject(method = "startSleepInBed", at = @At("RETURN"))
+	private void bedsbutendgame$scheduleNightmare(
+			BlockPos bedPos,
+			CallbackInfoReturnable<Either<Player.BedSleepingProblem, Unit>> cir
+	) {
+		Either<Player.BedSleepingProblem, Unit> result = cir.getReturnValue();
+		if (result != null && result.right().isPresent()) {
+			NightmareManager.onSleepStarted((ServerPlayer) (Object) this, bedPos);
+		}
+	}
+
+	private static void deny(
+			CallbackInfoReturnable<Either<Player.BedSleepingProblem, Unit>> cir,
+			String translationKey
+	) {
+		cir.setReturnValue(Either.left(new Player.BedSleepingProblem(Component.translatable(translationKey))));
 	}
 }

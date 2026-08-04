@@ -33,13 +33,9 @@ public final class BedsideTableBlock extends HorizontalDirectionalBlock {
 			{14.0, 0.0, 14.0, 16.0, 16.0, 16.0}
 	};
 
-	private static final double[][] HANDLE_BOXES = {
-			{0.5, 11.2, 7.0, 1.1, 12.2, 9.0},
-			{0.5, 7.6, 7.0, 1.1, 8.6, 9.0}
-	};
 
-	private static final Map<Direction, VoxelShape> OUTLINE_SHAPES = createShapes(true);
-	private static final Map<Direction, VoxelShape> OCCLUSION_SHAPES = createShapes(false);
+	private static final Map<Direction, VoxelShape> OUTLINE_SHAPES = createShapes();
+	private static final Map<Direction, VoxelShape> OCCLUSION_SHAPES = createShapes();
 
 	public BedsideTableBlock(Properties properties) {
 		super(properties);
@@ -91,24 +87,19 @@ public final class BedsideTableBlock extends HorizontalDirectionalBlock {
 		builder.add(FACING);
 	}
 
-	private static Map<Direction, VoxelShape> createShapes(boolean includeHandles) {
+	private static Map<Direction, VoxelShape> createShapes() {
 		EnumMap<Direction, VoxelShape> shapes = new EnumMap<>(Direction.class);
-		shapes.put(Direction.NORTH, createShape(Direction.NORTH, includeHandles));
-		shapes.put(Direction.SOUTH, createShape(Direction.SOUTH, includeHandles));
-		shapes.put(Direction.EAST, createShape(Direction.EAST, includeHandles));
-		shapes.put(Direction.WEST, createShape(Direction.WEST, includeHandles));
+		shapes.put(Direction.NORTH, createShape(Direction.NORTH));
+		shapes.put(Direction.SOUTH, createShape(Direction.SOUTH));
+		shapes.put(Direction.EAST, createShape(Direction.EAST));
+		shapes.put(Direction.WEST, createShape(Direction.WEST));
 		return Map.copyOf(shapes);
 	}
 
-	private static VoxelShape createShape(Direction facing, boolean includeHandles) {
+	private static VoxelShape createShape(Direction facing) {
 		VoxelShape shape = Shapes.empty();
 		for (double[] box : WOODEN_BOXES) {
 			shape = Shapes.or(shape, boxForFacing(box, facing));
-		}
-		if (includeHandles) {
-			for (double[] box : HANDLE_BOXES) {
-				shape = Shapes.or(shape, boxForFacing(box, facing));
-			}
 		}
 		return shape.optimize();
 	}
