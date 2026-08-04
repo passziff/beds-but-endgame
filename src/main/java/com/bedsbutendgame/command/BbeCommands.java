@@ -8,8 +8,8 @@ import com.mojang.brigadier.context.CommandContext;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.commands.permissions.Permissions;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.permissions.Permissions;
 
 public final class BbeCommands {
 	private BbeCommands() {
@@ -20,7 +20,6 @@ public final class BbeCommands {
 				Commands.literal("bbe")
 						.then(Commands.literal("config")
 								.executes(BbeCommands::showConfig)
-								.then(settingNode(ConfigOption.SECURED_SLEEP_ZONE))
 								.then(settingNode(ConfigOption.DISABLE_PHANTOMS))
 								.then(settingNode(ConfigOption.NIGHTMARES)))
 		));
@@ -43,7 +42,6 @@ public final class BbeCommands {
 	private static int showConfig(CommandContext<CommandSourceStack> context) {
 		context.getSource().sendSuccess(() -> Component.translatable(
 				"commands.bedsbutendgame.config.status",
-				state(ConfigManager.securedSleepZone()),
 				state(ConfigManager.disablePhantoms()),
 				state(ConfigManager.nightmares())
 		), false);

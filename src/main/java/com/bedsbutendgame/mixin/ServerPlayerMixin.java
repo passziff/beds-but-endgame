@@ -1,9 +1,7 @@
 package com.bedsbutendgame.mixin;
 
-import com.bedsbutendgame.config.ConfigManager;
 import com.bedsbutendgame.sleep.BedsideTableSleepCheck;
 import com.bedsbutendgame.sleep.NightmareManager;
-import com.bedsbutendgame.sleep.SecuredSleepZone;
 import com.mojang.datafixers.util.Either;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -37,10 +35,6 @@ public abstract class ServerPlayerMixin {
 		}
 		if (NightmareManager.isLockedOut(player)) {
 			deny(cir, "sleep.bedsbutendgame.nightmare_lockout");
-			return;
-		}
-		if (ConfigManager.securedSleepZone() && SecuredSleepZone.isUnsafe(player, bedPos)) {
-			deny(cir, "sleep.bedsbutendgame.unsecured_area");
 		}
 	}
 

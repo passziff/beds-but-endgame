@@ -7,14 +7,11 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
 public record ConfigSyncPayload(
-		boolean securedSleepZone,
 		boolean disablePhantoms,
 		boolean nightmares
 ) implements CustomPacketPayload {
 	public static final Type<ConfigSyncPayload> TYPE = new Type<>(BedsButEndgame.id("config_sync"));
 	public static final StreamCodec<RegistryFriendlyByteBuf, ConfigSyncPayload> CODEC = StreamCodec.composite(
-			ByteBufCodecs.BOOL,
-			ConfigSyncPayload::securedSleepZone,
 			ByteBufCodecs.BOOL,
 			ConfigSyncPayload::disablePhantoms,
 			ByteBufCodecs.BOOL,

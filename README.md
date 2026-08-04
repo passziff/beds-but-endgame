@@ -2,7 +2,7 @@
 
 # Beds, but Endgame
 
-Beds, but Endgame is a Fabric challenge mod for Minecraft Java Edition 26.2. It turns sleeping into a progression mechanic built around a new Bedside Table, safer shelters and an optional Soul Lantern upgrade.
+Beds, but Endgame is a Fabric challenge mod for Minecraft Java Edition 26.2. It turns sleeping into a progression mechanic built around a new Bedside Table and an optional Soul Lantern upgrade.
 
 ## How it works
 
@@ -19,13 +19,12 @@ Without a valid table, the bed still sets the player's respawn point but sleepin
 - Custom Bedside Table block
 - Sleeping requires a table beside the bed's head
 - Respawn points remain available without a table
-- Secured sleep checks in a 40x20x40 area around the bed
 - Natural insomnia phantoms can be disabled
 - Nightmares can interrupt sleep and lock the player out for the rest of the night
 - A Soul Lantern on a valid Bedside Table prevents nightmares
 - Shared configuration through Mod Menu and `/bbe` commands
 
-All three optional mechanics are enabled by default.
+Phantom suppression and nightmares are enabled by default.
 
 ## Bedside Table recipe
 
@@ -41,17 +40,11 @@ P P
 
 `P` is any item in the vanilla planks tag and `D` is a diamond. The recipe unlocks after the player obtains a diamond.
 
-## Secured sleep zone
-
-When enabled, the mod checks a 40x20x40 area around the bed when the player tries to sleep. Sleep is denied when hostile mobs are already able to reach the player or when the surrounding area contains a valid hostile spawn position with a path to the bed.
-
-The normal vanilla nearby-monster check still applies.
-
 ## Nightmares
 
 Without a Soul Lantern directly on top of either valid Bedside Table, there is a 35% chance of a nightmare.
 
-The player falls asleep normally, then wakes during the same night instead of reaching morning. After a nightmare, that player cannot sleep again until daytime. The lockout is per player and remains active after reconnecting.
+The player falls asleep normally, then wakes during the same night instead of reaching morning. After a nightmare, that player cannot sleep again until daytime. The lockout is handled separately for each player.
 
 A Soul Lantern prevents nightmares completely.
 
@@ -71,7 +64,6 @@ Default values:
 
 ```json
 {
-  "securedSleepZone": true,
   "disablePhantoms": true,
   "nightmares": true
 }
@@ -83,7 +75,6 @@ Commands:
 
 ```text
 /bbe config
-/bbe config securedSleepZone <on|off>
 /bbe config disablePhantoms <on|off>
 /bbe config nightmares <on|off>
 ```
@@ -101,13 +92,13 @@ Mod Menu is optional and only required for the graphical config screen.
 
 ## Inspiration
 
-Beds, but Endgame was inspired by [Harder Beds](https://modrinth.com/mod/harder-beds). I liked its approach to requiring a properly secured shelter before sleeping, but wanted the mechanic to work differently and include my own Bedside Table progression, so I made a separate implementation.
+Beds, but Endgame was inspired by [Harder Beds](https://modrinth.com/mod/harder-beds). I liked its approach to making sleep require a properly secured shelter, but wanted the mechanic to function differently and include my own bedside-table progression system, so I created a separate implementation.
 
 ## Testing status
 
 The Bedside Table, recipe, item rendering, block outline, collision, lighting and basic sleep requirement have been tested in singleplayer.
 
-Version 0.2.0 adds the secured sleep zone, phantom suppression, nightmares, configuration and commands. These systems still need a full singleplayer and multiplayer test pass before a stable release.
+Version 0.2.0 adds phantom suppression, nightmares, configuration and commands. These systems still need a full singleplayer and multiplayer test pass before a stable release.
 
 ## Build from source
 

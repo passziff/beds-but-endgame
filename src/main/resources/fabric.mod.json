@@ -3,7 +3,7 @@
   "id": "bedsbutendgame",
   "version": "${version}",
   "name": "Beds, but Endgame",
-  "description": "Makes sleeping require a bedside table and a properly secured shelter.",
+  "description": "Makes sleeping require a bedside table and adds configurable nightmares and phantom suppression.",
   "authors": [
     "passo"
   ],

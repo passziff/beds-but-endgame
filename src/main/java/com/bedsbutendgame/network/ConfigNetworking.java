@@ -29,7 +29,6 @@ public final class ConfigNetworking {
 
 	private static ConfigSyncPayload currentPayload() {
 		return new ConfigSyncPayload(
-				ConfigManager.securedSleepZone(),
 				ConfigManager.disablePhantoms(),
 				ConfigManager.nightmares()
 		);

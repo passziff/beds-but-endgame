@@ -10,17 +10,19 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 public final class NightmareManager {
 	public static final int NIGHTMARE_CHANCE_PERCENT = 35;
 	private static final int NIGHTMARE_DELAY_TICKS = 60;
 	private static final long MIDNIGHT_TIME = 18000L;
-	private static final String LOCKOUT_TAG = "bedsbutendgame.nightmare_lockout";
 
 	private static final Map<UUID, PendingNightmare> PENDING = new HashMap<>();
+	private static final Set<UUID> LOCKED_OUT = new HashSet<>();
 
 	private NightmareManager() {
 	}
@@ -30,11 +32,11 @@ public final class NightmareManager {
 	}
 
 	public static boolean isLockedOut(ServerPlayer player) {
-		if (!ConfigManager.nightmares() || player.level().isDay()) {
-			player.removeTag(LOCKOUT_TAG);
+		if (!ConfigManager.nightmares() || isDay(player.level())) {
+			LOCKED_OUT.remove(player.getUUID());
 			return false;
 		}
-		return player.getTags().contains(LOCKOUT_TAG);
+		return LOCKED_OUT.contains(player.getUUID());
 	}
 
 	public static void onSleepStarted(ServerPlayer player, BlockPos bedPos) {
@@ -53,14 +55,15 @@ public final class NightmareManager {
 
 	private static void tick(MinecraftServer server) {
 		for (ServerPlayer player : server.getPlayerList().getPlayers()) {
-			if (!ConfigManager.nightmares() || player.level().isDay()) {
-				player.removeTag(LOCKOUT_TAG);
+			if (!ConfigManager.nightmares() || isDay(player.level())) {
+				LOCKED_OUT.remove(player.getUUID());
 				PENDING.remove(player.getUUID());
 			}
 		}
 
 		if (!ConfigManager.nightmares()) {
 			PENDING.clear();
+			LOCKED_OUT.clear();
 			return;
 		}
 
@@ -81,9 +84,14 @@ public final class NightmareManager {
 			player.stopSleepInBed(true, true);
 			player.sendSystemMessage(Component.translatable("sleep.bedsbutendgame.nightmare"));
 			player.playSound(SoundEvents.SOUL_SAND_STEP, 0.8F, 0.7F);
-			player.addTag(LOCKOUT_TAG);
+			LOCKED_OUT.add(player.getUUID());
 			iterator.remove();
 		}
+	}
+
+	private static boolean isDay(ServerLevel level) {
+		long timeOfDay = Math.floorMod(level.getDayTime(), 24000L);
+		return timeOfDay < 12000L;
 	}
 
 	private static void moveToMidnight(ServerLevel level) {

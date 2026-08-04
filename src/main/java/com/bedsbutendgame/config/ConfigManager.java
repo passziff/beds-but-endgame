@@ -49,10 +49,6 @@ public final class ConfigManager {
 		}
 	}
 
-	public static synchronized boolean securedSleepZone() {
-		return config.securedSleepZone;
-	}
-
 	public static synchronized boolean disablePhantoms() {
 		return config.disablePhantoms;
 	}
@@ -63,7 +59,6 @@ public final class ConfigManager {
 
 	public static synchronized boolean get(ConfigOption option) {
 		return switch (option) {
-			case SECURED_SLEEP_ZONE -> config.securedSleepZone;
 			case DISABLE_PHANTOMS -> config.disablePhantoms;
 			case NIGHTMARES -> config.nightmares;
 		};
@@ -71,7 +66,6 @@ public final class ConfigManager {
 
 	public static synchronized void set(ConfigOption option, boolean enabled) {
 		switch (option) {
-			case SECURED_SLEEP_ZONE -> config.securedSleepZone = enabled;
 			case DISABLE_PHANTOMS -> config.disablePhantoms = enabled;
 			case NIGHTMARES -> config.nightmares = enabled;
 		}

@@ -1,7 +1,6 @@
 package com.bedsbutendgame.config;
 
 public enum ConfigOption {
-	SECURED_SLEEP_ZONE("securedSleepZone"),
 	DISABLE_PHANTOMS("disablePhantoms"),
 	NIGHTMARES("nightmares");
 

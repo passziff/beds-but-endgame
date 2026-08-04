@@ -4,6 +4,7 @@ import com.bedsbutendgame.client.ClientConfigState;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 
 public final class BbeConfigScreen extends Screen {
@@ -11,7 +12,6 @@ public final class BbeConfigScreen extends Screen {
 	private static final int BUTTON_HEIGHT = 20;
 
 	private final Screen parent;
-	private Button securedZoneButton;
 	private Button phantomsButton;
 	private Button nightmaresButton;
 
@@ -22,77 +22,63 @@ public final class BbeConfigScreen extends Screen {
 
 	@Override
 	protected void init() {
-		int left = (width - BUTTON_WIDTH) / 2;
-		int top = height / 2 - 50;
+		int x = (this.width - BUTTON_WIDTH) / 2;
 
-		securedZoneButton = addRenderableWidget(Button.builder(
-				securedZoneText(),
-				button -> sendToggle("securedSleepZone", ClientConfigState.securedSleepZone())
-		).bounds(left, top, BUTTON_WIDTH, BUTTON_HEIGHT).build());
-
-		phantomsButton = addRenderableWidget(Button.builder(
+		this.phantomsButton = this.addRenderableWidget(Button.builder(
 				disablePhantomsText(),
 				button -> sendToggle("disablePhantoms", ClientConfigState.disablePhantoms())
-		).bounds(left, top + 24, BUTTON_WIDTH, BUTTON_HEIGHT).build());
+		).pos(x, 72).size(BUTTON_WIDTH, BUTTON_HEIGHT).build());
 
-		nightmaresButton = addRenderableWidget(Button.builder(
+		this.nightmaresButton = this.addRenderableWidget(Button.builder(
 				nightmaresText(),
 				button -> sendToggle("nightmares", ClientConfigState.nightmares())
-		).bounds(left, top + 48, BUTTON_WIDTH, BUTTON_HEIGHT).build());
+		).pos(x, 96).size(BUTTON_WIDTH, BUTTON_HEIGHT).build());
 
-		addRenderableWidget(Button.builder(
-				Component.translatable("gui.done"),
-				button -> onClose()
-		).bounds(left, top + 88, BUTTON_WIDTH, BUTTON_HEIGHT).build());
+		this.addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, button -> this.onClose())
+				.pos(x, this.height - 28).size(BUTTON_WIDTH, BUTTON_HEIGHT).build());
 
-		boolean connected = minecraft.getConnection() != null;
-		securedZoneButton.active = connected;
-		phantomsButton.active = connected;
-		nightmaresButton.active = connected;
+		boolean connected = this.minecraft.getConnection() != null;
+		this.phantomsButton.active = connected;
+		this.nightmaresButton.active = connected;
 	}
 
 	@Override
 	public void tick() {
-		securedZoneButton.setMessage(securedZoneText());
-		phantomsButton.setMessage(disablePhantomsText());
-		nightmaresButton.setMessage(nightmaresText());
+		this.phantomsButton.setMessage(disablePhantomsText());
+		this.nightmaresButton.setMessage(nightmaresText());
 	}
 
 	@Override
 	public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float delta) {
 		super.extractRenderState(graphics, mouseX, mouseY, delta);
-		drawCentered(graphics, title, 24, 0xFFFFFFFF, true);
-		drawCentered(
-				graphics,
+		graphics.centeredText(this.font, this.title, this.width / 2, 14, 0xFFFFFFFF);
+		graphics.centeredText(
+				this.font,
 				Component.translatable("config.bedsbutendgame.server_note"),
-				44,
-				0xFFA0A0A0,
-				false
+				this.width / 2,
+				34,
+				0xFFAAAAAA
 		);
 	}
 
 	@Override
 	public void onClose() {
-		minecraft.gui.setScreen(parent);
+		this.minecraft.gui.setScreen(this.parent);
 	}
 
 	private void sendToggle(String option, boolean currentValue) {
-		if (minecraft.getConnection() != null) {
-			minecraft.getConnection().sendCommand(
+		if (this.minecraft.getConnection() != null) {
+			this.minecraft.getConnection().sendCommand(
 					"bbe config " + option + " " + (currentValue ? "off" : "on")
 			);
 		}
 	}
 
-	private Component securedZoneText() {
-		return optionText("securedSleepZone", ClientConfigState.securedSleepZone());
-	}
-
-	private Component disablePhantomsText() {
+	private static Component disablePhantomsText() {
 		return optionText("disablePhantoms", ClientConfigState.disablePhantoms());
 	}
 
-	private Component nightmaresText() {
+	private static Component nightmaresText() {
 		return optionText("nightmares", ClientConfigState.nightmares());
 	}
 
@@ -102,15 +88,5 @@ public final class BbeConfigScreen extends Screen {
 				Component.translatable("config.bedsbutendgame." + option),
 				Component.translatable(enabled ? "config.bedsbutendgame.on" : "config.bedsbutendgame.off")
 		);
-	}
-
-	private void drawCentered(
-			GuiGraphicsExtractor graphics,
-			Component text,
-			int y,
-			int color,
-			boolean shadow
-	) {
-		graphics.text(font, text, (width - font.width(text)) / 2, y, color, shadow);
 	}
 }
