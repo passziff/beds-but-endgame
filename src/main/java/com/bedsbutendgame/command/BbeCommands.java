@@ -35,7 +35,9 @@ public final class BbeCommands {
 	}
 
 	private static boolean canChangeConfig(CommandSourceStack source) {
-		return source.getServer().isSingleplayer()
+		var server = source.getServer();
+		return server == null
+				|| server.isSingleplayer()
 				|| source.permissions().hasPermission(Permissions.COMMANDS_MODERATOR);
 	}
 
