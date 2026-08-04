@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "bedsbutendgame",
+  "version": "${version}",
+  "name": "Beds, but Endgame",
+  "description": "Makes sleeping require a bedside table and a properly secured shelter.",
+  "authors": [
+    "passo"
+  ],
+  "contact": {
+    "sources": "https://github.com/passziff/beds-but-endgame"
+  },
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.bedsbutendgame.BedsButEndgame"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.3",
+    "minecraft": "~26.2",
+    "java": ">=25",
+    "fabric-api": "*"
+  }
+}

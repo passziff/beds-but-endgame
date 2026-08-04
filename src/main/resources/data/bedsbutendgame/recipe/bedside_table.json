@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "PPP",
+    "PDP",
+    "P P"
+  ],
+  "key": {
+    "P": "#minecraft:planks",
+    "D": "minecraft:diamond"
+  },
+  "result": {
+    "id": "bedsbutendgame:bedside_table",
+    "count": 1
+  }
+}
