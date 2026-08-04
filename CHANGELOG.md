@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.4
+
+- Restored a full-block collision box for the Bedside Table
+- Kept the model-shaped selection outline and lighting shape
+- Moved the Bedside Table recipe to the Miscellaneous recipe-book category beside beds
+- Removed the technical collision paragraph from the README
+- Updated the build workflow to use `actions/upload-artifact@v7`
+
 ## 0.1.3
 
 - Added a model-shaped selection outline for the Bedside Table

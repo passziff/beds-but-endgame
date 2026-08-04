@@ -12,7 +12,8 @@ Sleeping requires a Bedside Table next to the head of the bed. Beds still set th
 - Sleeping requires a table beside the head of the bed
 - Either side of the bed head works
 - Respawn points remain available without a table
-- Accurate model-shaped selection outline and collision
+- Accurate model-shaped selection outline
+- Full-block collision for consistent movement
 - Wooden sounds and breaking properties
 - Axe as the preferred tool
 - Fixed diamond-and-planks recipe
@@ -28,8 +29,6 @@ Place a Bedside Table directly to the left or right of the bed's head. A table b
 When no valid table is present, the bed still sets the player's respawn point but refuses to start sleeping.
 
 ## Bedside Table
-
-The table is a directional wooden block. Its selection outline follows the complete model, including the handles, while its physical collision follows the wooden body so the small handles do not catch the player.
 
 <p align="center">
   <img src="assets/bedside-table-dropped.png" width="620" alt="Dropped Bedside Table item">
@@ -70,7 +69,7 @@ Beds, but Endgame was inspired by [Harder Beds](https://modrinth.com/mod/harder-
 
 ## Current testing status
 
-The Bedside Table, recipe, item rendering and basic sleep requirement have been tested in singleplayer. Version 0.1.3 adds new model-shaped collision, selection and lighting behavior that still needs an in-game test pass.
+The Bedside Table, recipe, item rendering, selection outline, lighting and basic sleep requirement have been tested in singleplayer. Version 0.1.4 restores full-block collision and moves the recipe to the Miscellaneous recipe-book category.
 
 Dedicated multiplayer has not been tested yet.
 
