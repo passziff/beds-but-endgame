@@ -1,5 +1,6 @@
 {
   "credit": "Made with Blockbench",
+  "parent": "minecraft:block/block",
   "textures": {
     "0": "bedsbutendgame:block/bedside_table_texture",
     "1": "minecraft:block/diamond_block",

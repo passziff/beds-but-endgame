@@ -9,8 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 
 public final class BedsideTableBlock extends HorizontalDirectionalBlock {
-	public static final MapCodec<BedsideTableBlock> CODEC =
-			simpleCodec(BedsideTableBlock::new);
+	public static final MapCodec<BedsideTableBlock> CODEC = simpleCodec(BedsideTableBlock::new);
 
 	public BedsideTableBlock(Properties properties) {
 		super(properties);
@@ -18,19 +17,17 @@ public final class BedsideTableBlock extends HorizontalDirectionalBlock {
 	}
 
 	@Override
-	public MapCodec<BedsideTableBlock> codec() {
+	protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
 		return CODEC;
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		return defaultBlockState()
-				.setValue(FACING, context.getHorizontalDirection().getOpposite());
+		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
 	}
 
 	@Override
-	protected void createBlockStateDefinition(
-			StateDefinition.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(FACING);
 	}
 }

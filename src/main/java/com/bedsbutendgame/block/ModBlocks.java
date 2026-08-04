@@ -20,7 +20,7 @@ public final class ModBlocks {
 	public static final Block BEDSIDE_TABLE = register(
 			BEDSIDE_TABLE_ID,
 			BedsideTableBlock::new,
-			BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS)
+			BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS).noOcclusion()
 	);
 
 	private ModBlocks() {
