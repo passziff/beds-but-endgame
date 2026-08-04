@@ -1,5 +1,6 @@
 package com.bedsbutendgame.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
@@ -8,18 +9,28 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 
 public final class BedsideTableBlock extends HorizontalDirectionalBlock {
+	public static final MapCodec<BedsideTableBlock> CODEC =
+			simpleCodec(BedsideTableBlock::new);
+
 	public BedsideTableBlock(Properties properties) {
 		super(properties);
 		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
 	}
 
 	@Override
-	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+	public MapCodec<BedsideTableBlock> codec() {
+		return CODEC;
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
+		return defaultBlockState()
+				.setValue(FACING, context.getHorizontalDirection().getOpposite());
+	}
+
+	@Override
+	protected void createBlockStateDefinition(
+			StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(FACING);
 	}
 }
