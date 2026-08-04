@@ -8,6 +8,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.clock.WorldClocks;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -90,15 +91,18 @@ public final class NightmareManager {
 	}
 
 	private static boolean isDay(ServerLevel level) {
-		long timeOfDay = Math.floorMod(level.getDayTime(), 24000L);
+		long timeOfDay = Math.floorMod(level.getOverworldClockTime(), 24000L);
 		return timeOfDay < 12000L;
 	}
 
 	private static void moveToMidnight(ServerLevel level) {
-		long dayTime = level.getDayTime();
-		long timeOfDay = Math.floorMod(dayTime, 24000L);
+		long clockTime = level.getOverworldClockTime();
+		long timeOfDay = Math.floorMod(clockTime, 24000L);
 		if (timeOfDay < MIDNIGHT_TIME) {
-			level.setDayTime(dayTime + (MIDNIGHT_TIME - timeOfDay));
+			level.clockManager().setTotalTicks(
+					level.registryAccess().getOrThrow(WorldClocks.OVERWORLD),
+					clockTime + (MIDNIGHT_TIME - timeOfDay)
+			);
 		}
 	}
 
