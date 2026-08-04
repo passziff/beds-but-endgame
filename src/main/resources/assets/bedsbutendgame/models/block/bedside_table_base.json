@@ -1,6 +1,7 @@
 {
   "credit": "Made with Blockbench",
   "parent": "minecraft:block/block",
+  "ambientocclusion": false,
   "textures": {
     "handles": "minecraft:block/diamond_block"
   },

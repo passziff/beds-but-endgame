@@ -12,6 +12,8 @@
 - Added `/bbe config nightmareChance <0-100>`
 - Added automatic migration from the 0.2.0 nightmare toggle
 - Removed the redundant “Server settings.” text from Mod Menu
+- Fixed overly dark model shading when a Bedside Table touches a full block
+- Updated the README banner and screenshots
 
 ## 0.2.0
 
