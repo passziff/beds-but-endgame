@@ -1,3 +1,4 @@
 {
-  "block.bedsbutendgame.bedside_table": "Nachttisch"
+  "block.bedsbutendgame.bedside_table": "Nachttisch",
+  "sleep.bedsbutendgame.missing_bedside_table": "Zum Schlafen wird ein Nachttisch benötigt."
 }

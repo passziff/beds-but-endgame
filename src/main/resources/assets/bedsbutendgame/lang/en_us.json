@@ -1,3 +1,4 @@
 {
-  "block.bedsbutendgame.bedside_table": "Bedside Table"
+  "block.bedsbutendgame.bedside_table": "Bedside Table",
+  "sleep.bedsbutendgame.missing_bedside_table": "A bedside table is required to sleep."
 }
