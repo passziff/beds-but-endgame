@@ -2,6 +2,8 @@
 
 ## 0.3.0
 
+- Corrected the Bedside Table UV mapping.
+
 - Added Oak, Spruce, Birch, Jungle, Acacia, Dark Oak, Mangrove, Cherry, Pale Oak, Bamboo, Crimson and Warped Bedside Tables
 - Kept the original `bedside_table` ID as the Oak variant for world compatibility
 - Switched Bedside Tables to matching vanilla plank textures with shared model geometry
