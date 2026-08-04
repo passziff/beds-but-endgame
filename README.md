@@ -1,38 +1,44 @@
-<p align="center">
-  <img src="assets/beds-but-endgame-banner.png" alt="Beds, but Endgame" width="800">
-</p>
+![Beds, but Endgame banner](assets/beds-but-endgame-banner.png)
 
 # Beds, but Endgame
 
-Beds, but Endgame is a Fabric mod for Minecraft Java Edition 26.2 that makes sleeping something the player has to prepare for.
+Beds, but Endgame is a Fabric challenge mod for Minecraft Java Edition 26.2.
 
-A Bedside Table must be placed next to the head of a bed before the player can sleep. The bed can still be used to set a respawn point without one.
+Sleeping requires a Bedside Table next to the head of the bed. Beds still set the player's respawn point without one, so the restriction affects skipping the night rather than basic respawning.
 
-## Features
+## Main features
 
 - Bedside Table block with a custom model and texture
-- Sleeping requires a Bedside Table beside the head of the bed
+- Sleeping requires a table beside the head of the bed
 - Either side of the bed head works
-- Respawn points can still be set without a Bedside Table
-- Directional placement
+- Respawn points remain available without a table
+- Accurate model-shaped selection outline and collision
 - Wooden sounds and breaking properties
 - Axe as the preferred tool
 - Fixed diamond-and-planks recipe
 
-## Bedside Table
+## How the sleep requirement works
 
 <p align="center">
-  <img src="assets/bedside-table-ingame.png" alt="Bedside Table placed beside a bed" width="620">
+  <img src="assets/bedside-table-ingame.png" width="620" alt="Bedside Table placed beside the head of a bed">
 </p>
 
-Place the Bedside Table directly to the left or right of the bed's head. A table beside the foot, above, below or diagonally from the bed does not count.
+Place a Bedside Table directly to the left or right of the bed's head. A table beside the foot, diagonally placed, above the bed or below it does not count.
 
-Without a valid table, the respawn point is set normally but sleeping is denied.
+When no valid table is present, the bed still sets the player's respawn point but refuses to start sleeping.
+
+## Bedside Table
+
+The table is a directional wooden block. Its selection outline follows the complete model, including the handles, while its physical collision follows the wooden body so the small handles do not catch the player.
+
+<p align="center">
+  <img src="assets/bedside-table-dropped.png" width="620" alt="Dropped Bedside Table item">
+</p>
 
 ## Recipe
 
 <p align="center">
-  <img src="assets/bedside-table-recipe.png" alt="Bedside Table crafting recipe" width="480">
+  <img src="assets/bedside-table-recipe.png" width="480" alt="Bedside Table crafting recipe">
 </p>
 
 ```text
@@ -41,42 +47,36 @@ PDP
 P P
 ```
 
-`P` is any plank and `D` is a diamond. The recipe unlocks after obtaining a diamond.
+`P` is any item in the vanilla planks tag and `D` is a diamond. The recipe unlocks after the player obtains a diamond.
 
-<details>
-<summary>More screenshots</summary>
-
-<p align="center">
-  <img src="assets/bedside-table-dropped.png" alt="Dropped Bedside Table item" width="620">
-</p>
-
-</details>
-
-## Planned
+## Planned mechanics
 
 - Optional secured-sleep check in a 40x20x40 area around the bed
 - Sleep denial when hostile mobs could spawn and pathfind to the player
 - Optional disabling of natural insomnia phantom spawning
-- Configuration screen
-
-## Inspiration
-
-This mod was inspired by [Harder Beds](https://modrinth.com/mod/harder-beds). I liked its approach to requiring a properly secured shelter before sleeping, but wanted the mechanic to work differently and include a Bedside Table, so I made my own implementation.
+- Optional nightmares unless a Soul Lantern is placed on the Bedside Table
+- Configuration through Mod Menu
 
 ## Installation
 
 1. Install Fabric Loader 0.19.3 or newer for Minecraft 26.2.
 2. Install Fabric API 0.156.0+26.2 or a compatible newer 26.2 build.
-3. Put the mod JAR in the `mods` folder.
+3. Put the installable mod JAR in the `mods` folder.
 4. Start Minecraft with Java 25.
 
-## Testing status
+## Inspiration
 
-The Bedside Table block, recipe and item rendering have been tested in singleplayer. The new sleep requirement still needs a full in-game test after building version 0.1.2. Dedicated multiplayer has not been tested yet.
+Beds, but Endgame was inspired by [Harder Beds](https://modrinth.com/mod/harder-beds). I liked its approach to requiring a properly secured shelter before sleeping, but wanted the mechanic to work differently and include my own Bedside Table progression, so I made a separate implementation.
+
+## Current testing status
+
+The Bedside Table, recipe, item rendering and basic sleep requirement have been tested in singleplayer. Version 0.1.3 adds new model-shaped collision, selection and lighting behavior that still needs an in-game test pass.
+
+Dedicated multiplayer has not been tested yet.
 
 ## Build from source
 
-Java 25 is required.
+Java 25 and Gradle 9.5.1 are required.
 
 ```bash
 gradle build
@@ -88,7 +88,6 @@ The installable JAR is written to `build/libs/`.
 
 Beds, but Endgame is available under the MIT License.
 
-<p align="center">
-  <img src="assets/passo-logo.png" alt="passo" width="64"><br>
-  Created by passo.
-</p>
+<img src="assets/passo-logo.png" width="48" alt="Passo logo">
+
+Created by passo.
